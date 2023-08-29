@@ -1,18 +1,18 @@
+import { useDispatch } from 'react-redux';
+import { addContact } from 'components/redux/contactsSlice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { INITIAL_VALUES, schema } from './Config';
 import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 
-const ContactForm = ({ onFormSubmit }) => {
+const ContactForm = () => {
   const inputNameId = nanoid();
   const inputNumberId = nanoid();
+  const dispatch = useDispatch();
 
   const hendleSubmit = (values, { resetForm }) => {
-    const contactId = nanoid();
-    const contact = { id: contactId, ...values };
-    onFormSubmit(contact);
-    console.log('contact: ', contact);
+    dispatch(addContact(values));
+
     resetForm();
   };
 
@@ -61,10 +61,6 @@ const ContactForm = ({ onFormSubmit }) => {
       </Formik>
     </>
   );
-};
-
-ContactForm.propTypes = {
-  onFormSubmit: PropTypes.func,
 };
 
 export default ContactForm;
